@@ -21,6 +21,7 @@
     <string name="appearance_prefs_desc">Passen Sie das Aussehen des Widgets an</string>
     <string name="appearance_text_size_desc">Textgröße anpassen</string>
     <string name="appearance_text_size_title">Textgröße</string>
+    <string name="appearance_text_size_very_small">sehr klein</string>
     <string name="appearance_text_size_small">Klein</string>
     <string name="appearance_text_size_medium">Mittel</string>
     <string name="appearance_text_size_large">Groß</string>
