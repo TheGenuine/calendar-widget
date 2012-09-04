@@ -115,7 +115,9 @@ public class CalendarEventVisualizer implements IEventVisualizer<CalendarEvent> 
 
 	private int getEventEntryLayout() {
 		String textSize = prefs.getString(PREF_TEXT_SIZE, PREF_TEXT_SIZE_MEDIUM);
-		if (textSize.equals(PREF_TEXT_SIZE_SMALL)) {
+		if (textSize.equals(PREF_TEXT_SIZE_VERY_SMALL)) {
+			return R.layout.event_entry_very_small;
+		} else if (textSize.equals(PREF_TEXT_SIZE_SMALL)) {
 			return R.layout.event_entry_small;
 		} else if (textSize.equals(PREF_TEXT_SIZE_LARGE)) {
 			return R.layout.event_entry_large;
