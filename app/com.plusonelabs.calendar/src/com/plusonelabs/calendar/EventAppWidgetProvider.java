@@ -1,6 +1,10 @@
 package com.plusonelabs.calendar;
 
+import static com.plusonelabs.calendar.prefs.ICalendarPreferences.*;
+
 import java.util.Date;
+
+import org.joda.time.DateTime;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -17,6 +21,8 @@ import android.widget.RemoteViews;
 import com.plusonelabs.calendar.prefs.ICalendarPreferences;
 
 public class EventAppWidgetProvider extends AppWidgetProvider {
+
+	private static final String METHOD_SET_BACKGROUND_RESOURCE = "setBackgroundResource";
 
 	@Override
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -36,8 +42,7 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
 			rv.setPendingIntentTemplate(R.id.event_list,
 					CalendarIntentUtil.createOpenCalendarEventPendingIntent(context));
 
-			intent = CalendarIntentUtil.createOpenCalendarAtDayIntent(context,
-					System.currentTimeMillis());
+			intent = CalendarIntentUtil.createOpenCalendarAtDayIntent(context, new DateTime());
 			rv.setOnClickFillInIntent(R.id.empty_event_list, intent);
 
 			Date curDate = new Date();
@@ -59,8 +64,42 @@ public class EventAppWidgetProvider extends AppWidgetProvider {
 				rv.setViewVisibility(R.id.action_bar, View.GONE);
 			}
 
+			int bgTrans = prefs.getInt(ICalendarPreferences.PREF_BACKGROUND_TRANSPARENCY,
+					PREF_BACKGROUND_TRANSPARENCY_DEFAULT);
+			rv.setInt(R.id.widget_background, METHOD_SET_BACKGROUND_RESOURCE,
+					transparencyToDrawableRes(bgTrans));
+
 			appWidgetManager.updateAppWidget(widgetId, rv);
 		}
+	}
+
+	private int transparencyToDrawableRes(int bgTrans) {
+		int opacity = (bgTrans - 100) * -1;
+		switch (opacity) {
+			case 0:
+				return R.drawable.widget_background_0;
+			case 10:
+				return R.drawable.widget_background_10;
+			case 20:
+				return R.drawable.widget_background_20;
+			case 30:
+				return R.drawable.widget_background_30;
+			case 40:
+				return R.drawable.widget_background_40;
+			case 50:
+				return R.drawable.widget_background_50;
+			case 60:
+				return R.drawable.widget_background_60;
+			case 70:
+				return R.drawable.widget_background_70;
+			case 80:
+				return R.drawable.widget_background_80;
+			case 90:
+				return R.drawable.widget_background_90;
+			case 100:
+				return R.drawable.widget_background_100;
+		}
+		return R.drawable.widget_background_50;
 	}
 
 	public static void updateEventList(Context context) {
